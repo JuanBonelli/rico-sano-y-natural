@@ -151,11 +151,11 @@ test("Req 3. El plan tiene un total de 2 comidas DM", () => {
 });
 
 test("Req 4. El plan es fuerte en proteinas", () => {
-    expect(plan.tienePromedioDe(TipoComposicion.PROTEINA, 50)).toBe(true);
+    expect(plan.esFuerteEnProteinas(TipoComposicion.PROTEINA, 50)).toBe(true);
 });
 
 test("Req 5. El plan alimenticio es bien verde", () => {
-    expect(plan.tienePromedioDe(TipoComposicion.VERDURA, 35)).toBe(true);
+    expect(plan.esBienVerde(TipoComposicion.VERDURA, 35)).toBe(true);
 })
 
 test("Req 6. El plan tiene 3 colaciones.", () => {

@@ -65,8 +65,15 @@ export class Plan {
         return comidasFiltradas.length;
     }
 
+    public esFuerteEnProteinas(tipoComposicion: TipoComposicion, porcentajeMinimo: number){
+        return this.tipoComposicionTienePromedioDe(tipoComposicion, porcentajeMinimo);
+    }
 
-    public tienePromedioDe(tipoComposicion: TipoComposicion, porcentajeMinimo: number) {
+    public esBienVerde(tipoComposicion: TipoComposicion, porcentajeMinimo: number){
+        return this.tipoComposicionTienePromedioDe(tipoComposicion, porcentajeMinimo);
+    }
+
+    private tipoComposicionTienePromedioDe(tipoComposicion: TipoComposicion, porcentajeMinimo: number) {
         let sumatoriaProteinas: number = 0;
         let cantidadProteinas: number = 0;
 
