@@ -14,4 +14,12 @@ export class Composicion {
         this.porcentaje = porcentaje;
         this.tipo = tipo;
     }
+
+    public getPorcentaje = () : number => {
+        return this.porcentaje;
+    }
+
+    public getTipo = () : TipoComposicion => {
+        return this.tipo;
+    }
 }

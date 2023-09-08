@@ -1,6 +1,5 @@
 export enum TipoComida {
-    DESAYUNO,
-    ALMUERZO,
-    MERIENDA,
-    CENA
+    DESAYUNO_MERIENDA, 
+    ALMUERZO_CENA
+    
 }

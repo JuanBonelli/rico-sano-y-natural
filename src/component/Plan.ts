@@ -1,4 +1,6 @@
 import { Calificacion } from "../enums/Calificacion";
+import { TipoComida } from "../enums/TipoComida";
+import { TipoComposicion } from "../enums/TipoComposicion";
 import { Bebida } from "./Bebida";
 import { Colacion } from "./Colacion";
 import { Comida } from "./Comida";
@@ -15,7 +17,7 @@ export class Plan {
     private comidas: Comida[];
     private colaciones: Colacion[];
     private bebidas: Bebida[];
-    private objetivos : Objetivo[];
+    private objetivos: Objetivo[];
 
     constructor(
         profesional: Profesional,
@@ -39,24 +41,57 @@ export class Plan {
         this.objetivos = objetivos;
     }
 
-    public generarEvaluacion = () : Calificacion => {
-        let cantidadCompletada = 0;
-        this.objetivos.forEach(objetivo => {
-            if(objetivo.estaCompletado()) cantidadCompletada++
-        });
+    public generarEvaluacion(): Calificacion {
+        let cantidadCompletada = this.objetivos.filter(objetivo => objetivo.estaCompletado()).length;
 
         let porcentaje = (cantidadCompletada / this.objetivos.length) * 100;
 
-        let evaluacion : Calificacion;
-        if(porcentaje === 100) evaluacion = Calificacion.EXCELENTE
-        else if(porcentaje >= 60) evaluacion = Calificacion.MUY_BUENA
-        else if(porcentaje >= 50) evaluacion = Calificacion.BUENA
+        let evaluacion: Calificacion;
+        if (porcentaje === 100) evaluacion = Calificacion.EXCELENTE
+        else if (porcentaje >= 60) evaluacion = Calificacion.MUY_BUENA
+        else if (porcentaje >= 50) evaluacion = Calificacion.BUENA
         else evaluacion = Calificacion.REGULAR
 
         return evaluacion
     }
 
-    public obtenerCantidadDeComidas = () : number => {
+    public obtenerCantidadDeComidas(): number {
         return this.duracion.getComidas();
     }
+
+    public obtenerCantidadDeComidasPorTipo(tipoComida: TipoComida): number {
+        let comidasFiltradas: Comida[] = this.comidas.filter(comida => comida.getTipo() === tipoComida);
+
+        return comidasFiltradas.length;
+    }
+
+
+    public tienePromedioDe(tipoComposicion: TipoComposicion, porcentajeMinimo: number) {
+        let sumatoriaProteinas: number = 0;
+        let cantidadProteinas: number = 0;
+
+        let comidasAC = this.comidas.filter(comida => comida.getTipo() === TipoComida.ALMUERZO_CENA);
+        comidasAC.forEach(comida => {
+            comida.getComposicion()?.forEach(composicion => {
+                if (composicion.getTipo() === tipoComposicion) {
+                    sumatoriaProteinas += composicion.getPorcentaje();
+                    cantidadProteinas++;
+                }
+            });
+        })
+
+        let promedioProteinas: number = sumatoriaProteinas / cantidadProteinas;
+
+        return (promedioProteinas >= porcentajeMinimo);
+
+    }
+
+    public obtenerCantidadColaciones(): number {
+        return this.colaciones.length;
+    }
+
+    public obtenerCantidadBebidas(): number {
+        return this.bebidas.length;
+    }
+
 }

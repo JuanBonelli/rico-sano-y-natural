@@ -18,4 +18,12 @@ export class Comida {
         this.descripcion = descripcion;
         this.composicion = composicion;
     }
+
+    public getTipo = () : TipoComida => {
+        return this.tipo;
+    }  
+
+    public getComposicion = () : Composicion[] | null => {
+        return this.composicion;
+    }
 }

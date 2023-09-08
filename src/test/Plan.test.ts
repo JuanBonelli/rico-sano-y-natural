@@ -44,18 +44,18 @@ let plan = new Plan(
     [
         new Comida(
             "Tostada",
-            TipoComida.DESAYUNO,
+            TipoComida.DESAYUNO_MERIENDA,
             "2 Tostada con queso crema",
             null
         ),
         new Comida(
             "Fideos y Milanesa",
-            TipoComida.ALMUERZO,
+            TipoComida.ALMUERZO_CENA,
             "1 Porcion de Fideos y 1 Milanesa y 1 Vegetal",
             [
                 new Composicion(
                     "Fideos",
-                    30,
+                    10,
                     TipoComposicion.CARBOHIDRATO
                 ),
                 new Composicion(
@@ -65,35 +65,35 @@ let plan = new Plan(
                 ),
                 new Composicion(
                     "Brocoli",
-                    10,
+                    30,
                     TipoComposicion.VERDURA
                 )
             ]
         ),
         new Comida(
             "Tostada",
-            TipoComida.MERIENDA,
+            TipoComida.DESAYUNO_MERIENDA,
             "2 Tostada con queso crema",
             null
         ),
         new Comida(
             "Tostada",
-            TipoComida.CENA,
+            TipoComida.ALMUERZO_CENA,
             "2 Tostada con queso crema",
             [
                 new Composicion(
                     "Arroz",
-                    30,
+                    10,
                     TipoComposicion.CARBOHIDRATO
                 ),
                 new Composicion(
                     "Pollo",
-                    60,
+                    50,
                     TipoComposicion.PROTEINA
                 ),
                 new Composicion(
                     "Brocoli",
-                    10,
+                    40,
                     TipoComposicion.VERDURA
                 )
             ]
@@ -138,12 +138,30 @@ let plan = new Plan(
 
 paciente.asignarPlan(plan);
 
-test("La calificacion del plan es Buena", () => {
+test("Req 1. La calificacion del plan es Buena", () => {
     expect(plan.generarEvaluacion()).toBe(Calificacion.BUENA);
-
-
 })
 
-test("La cantidad de comidas del plan alimenticio esd de 60", () => {
+test("Req 2. La cantidad de comidas del plan alimenticio esd de 60", () => {
     expect(plan.obtenerCantidadDeComidas()).toBe(60);
+})
+
+test("Req 3. El plan tiene un total de 2 comidas DM", () => {
+    expect(plan.obtenerCantidadDeComidasPorTipo(TipoComida.DESAYUNO_MERIENDA)).toBe(2);
+});
+
+test("Req 4. El plan es fuerte en proteinas", () => {
+    expect(plan.tienePromedioDe(TipoComposicion.PROTEINA, 50)).toBe(true);
+});
+
+test("Req 5. El plan alimenticio es bien verde", () => {
+    expect(plan.tienePromedioDe(TipoComposicion.VERDURA, 35)).toBe(true);
+})
+
+test("Req 6. El plan tiene 3 colaciones.", () => {
+    expect(plan.obtenerCantidadColaciones()).toBe(3);
+})
+
+test("Req 6. El plan tiene 2 bebidas.", () => {
+    expect(plan.obtenerCantidadBebidas()).toBe(2);
 })
